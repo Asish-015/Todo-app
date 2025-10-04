@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f3f6;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .todo-container {
+            width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .complete-btn {
+            background: #2196F3;
+            color: white;
+        }
+        .delete-btn {
+            background: #e53935;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h2>My Todo List</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter new task" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul>
+            <li>
+                <span>Learn Django</span>
+                <div class="actions">
+                    <button class="complete-btn">Complete</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            </li>
+            <li>
+                <span class="completed">Build Todo App</span>
+                <div class="actions">
+                    <button class="complete-btn">Complete</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            </li>
+            <li>
+                <span>Go for a walk</span>
+                <div class="actions">
+                    <button class="complete-btn">Complete</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
