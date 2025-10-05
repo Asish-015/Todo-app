@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from app.models import signup
+from app import models
+from app.models import TODO
+from django.contrib.auth import login as lg,authenticate
 
 
 def home(request):
@@ -18,15 +20,46 @@ def home(request):
 
 def login(request):
     if request.method=="POST":
-        name=request.POST.get("name")
+        name=request.POST.get("username")
         password=request.POST.get("password")
-        user=User.objects.filter(username=name,password=password).first()
+        user=authenticate(request,username=name,password=password)
         if user is not None:
+            lg(request,user)
             return redirect('/todo')
         else:
             return redirect('/login')
     return render(request,"login.html")
 
 def todo(request):
-    return render(request,"todo.html")
+    if request.method=='POST':
+        title=request.POST.get("title")
+        desc=request.POST.get("description")
+        object=models.TODO(title=title,desc=desc,user=request.user)
+        object.save()
+        user=request.user
+        res=models.TODO.objects.filter(user=request.user).order_by('date')
+        return redirect("/todo",{'res':res})
+    res=models.TODO.objects.filter(user=request.user).order_by('date')
+    return render(request,"todo.html",{'res':res})
+
+def edit(request,sno):
+    if request.method=='POST':
+        title=request.POST.get("title")
+        desc=request.POST.get("description")
+        object=models.TODO.objects.get(sno=sno)
+        object.title=title
+        object.desc=desc
+        object.save()
+        user=request.user
+        res=models.TODO.objects.filter(user=request.user).order_by('date')
+        return redirect("/todo",{'object':object})
+    object=models.TODO.objects.get(sno=sno)
+    res=models.TODO.objects.filter(user=request.user).order_by('date')
+    return render(request,"edit_todo.html",{'object':object})
+
+def delete(request,sno):
+    object=models.TODO.objects.get(sno=sno)
+    object.delete()
+    return redirect("/todo")
+
 # Create your views here.

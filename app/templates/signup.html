@@ -44,6 +44,18 @@
         button:hover {
             background: #45a049;
         }
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .login-link a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +68,10 @@
             <input type="password" name="password" placeholder="Enter your Password" required>
             <button type="submit">Signup</button>
         </form>
+
+        <div class="login-link">
+            Already a user? <a href="/login">Login</a>
+        </div>
     </div>
 </body>
 </html>
