@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from app import models
 from app.models import TODO
-from django.contrib.auth import login as lg,authenticate
+from django.contrib.auth import login as lg,authenticate,logout
 
 
 def home(request):
@@ -62,4 +62,7 @@ def delete(request,sno):
     object.delete()
     return redirect("/todo")
 
+def signout(request):
+    logout(request)
+    return redirect('/login')
 # Create your views here.
